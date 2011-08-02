@@ -134,7 +134,13 @@ jQuery.tmpl = {
 					return [];
 				} else {
 					// Convert the value to a string and replace with that text node
-					return jQuery( "<div>" ).append( value + "" ).contents();
+					var append = jQuery( "<div>" ).append( value + "" ).contents();
+					var text = jQuery( "<div>" ).text( value + "" ).contents();
+					if ( append.length === 0 ) {
+						return text;
+					} else {
+						return append;
+					}
 				}
 			}
 		},
