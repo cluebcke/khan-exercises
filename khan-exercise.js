@@ -1384,39 +1384,22 @@ function prepareSite() {
 }
 
 function nextProblem( num ) {
-	if ( num > 0 ) {
-		// Increment the problem number
-		problemNum += jumpNum;
+	problemNum += ( num * jumpNum ) % 200;
 
-		if ( problemNum >= 200 ) {
-			problemNum -= 200;
-		}
+	if ( problemNum < 200 ) {
+		problemNum += 200;
+	}
 
-		// Go to the next problem type in the problem bag
-		problemBagIndex = (problemBagIndex + 1) % problemCount;
+	// Go to the next problem type in the problem bag
+	problemBagIndex = ( problemBagIndex + num ) % problemCount;
 
-		nextProblem( num - 1 );
+	if ( problemBagIndex < 0 ) {
+		problemBagIndex += problemCount;
 	}
 }
 
 function prevProblem( num ) {
-	if ( num > 0 ) {
-		// Increment the problem number
-		problemNum -= jumpNum;
-
-		if ( problemNum < 0 ) {
-			problemNum += 200;
-		}
-
-		// Go to the next problem type in the problem bag
-		problemBagIndex = (problemBagIndex - 1) % problemCount;
-
-		if ( problemBagIndex < 0 ) {
-			problemBagIndex += problemCount;
-		}
-
-		prevProblem( num - 1 );
-	}
+	nextProblem( -num );
 }
 
 function prepareUserExercise( data ) {
